@@ -1,14 +1,14 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "exampledb",
+    "username": "remoteConnect",
+    "password": "TEST",
+    "database": "datapet_db",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
+    "username": "remoteConnect",
+    "password": "TEST",
     "database": "testdb",
     "host": "localhost",
     "dialect": "mysql",
