@@ -24,6 +24,37 @@ app.set("view engine", "handlebars");
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
+//   // Create a new pet
+// var testHarnessPet1 = {
+//   petName: "Evil",
+//   imageURL: " ",
+//   birthMonth: 06,
+//   birthYear: 66,
+//   petType: "Dog",
+//   petSubtype: "Weiner",
+//   gender: "A-gendered Demon",
+//   neutered: true,
+//   ownerId: 1,
+//   medicalHistory:  "chronic possessions"
+// };
+// db.pets.create(testHarnessPet1, function(result){
+//   console.log("successfully created: " +result);
+// });
+// var testHarnessPet2 = {
+//   petName: "Floyd",
+//   imageURL: " ", 
+//   birthMonth: 01,
+//   birthYear: 18,
+//   petType: "Cat", 
+//   petSubtype: "Cheshire", 
+//   gender: "Male",
+//   neutered: false,
+//   ownerId: 2,
+//   medicalHistory: "suffers long boughts of disappearing"
+// };
+// db.pets.create(testHarnessPet2, function(result){
+//   console.log("successfully created: " +result);
+// });
 
 var syncOptions = { force: false };
 

@@ -9,6 +9,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   });
+  petNotes.associate = function(models) {
+    petNotes.belongsTo(models.pets, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
 
   return petNotes;
 };

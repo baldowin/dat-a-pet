@@ -1,4 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
+  
   var pets = sequelize.define("pets", {
     petId:
     {
@@ -43,17 +44,17 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: true
     },
-    ownerId:
-    {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     medicalHistory:
     {
       type: DataTypes.TEXT,
     }
   });
   pets.associate = function (models) {
+    pets.belongsTo(models.owners, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
     pets.hasMany(models.petNotes, {
       onDelete: "cascade"
     });
