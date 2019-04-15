@@ -1,16 +1,18 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var pets = sequelize.define("pets", {
-    petId: 
-    { type: DataTypes.INTEGER,
-       autoIncrement: true,
-       allowNull: false,
-       primaryKey: true},
-    petName:{
-      type: DataTypes.VARCHAR,
+    petId:
+    {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true
+    },
+    petName: {
+      type: DataTypes.STRING,
       allowNull: false
     },
     imageURL: {
-      type: DataTypes.VARCHAR
+      type: DataTypes.STRING
     },
     birthMonth: {
       type: DataTypes.INTEGER,
@@ -23,16 +25,16 @@ module.exports = function(sequelize, DataTypes) {
     },
     petType:
     {
-      type: DataTypes.VARCHAR,
+      type: DataTypes.STRING,
       allowNull: false
     },
     petSubtype:
     {
-      type: DataTypes.VARCHAR,
+      type: DataTypes.STRING,
     },
     gender:
     {
-      type: DataTypes.VARCHAR,
+      type: DataTypes.STRING,
       allowNull: false
     },
     neutered:
@@ -46,16 +48,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    medicalHistory: 
+    medicalHistory:
     {
       type: DataTypes.TEXT,
     }
   });
+  pets.associate = function (models) {
+    pets.hasMany(models.petNotes, {
+      onDelete: "cascade"
+    });
+  };
   return pets;
-};
 
-pets.associate = function(models){
-  pets.hasMany(models.petNotes, {
-    onDelete: "cascade"
-  });
 };

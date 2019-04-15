@@ -1,17 +1,18 @@
 var db = require("../models");
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Get all examples
-  app.get("/api/examples", function(req, res) {
+  app.get("/api/examples", function (req, res) {
     db.pets.findAll({
       where: {
-        petId : 1
+        petId: 1
         //HARDCODED OWNERID !!!!!!!!!
       }
-    }).then(function(view) {
+    }).then(function (view) {
       res.json(view);
     });
   });
+};
 
 //   // Create a new pet
 //   app.post("/api/examples", function(req, res) {
