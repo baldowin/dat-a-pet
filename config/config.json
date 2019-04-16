@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "remoteConnect",
-    "password": "TEST",
+    "username": "root",
+    "password": "Vino5506!",
     "database": "datapet_db",
     "host": "localhost",
     "dialect": "mysql"
