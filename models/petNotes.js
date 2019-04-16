@@ -1,9 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
   var petNotes = sequelize.define("petNotes", {
-    petId: 
-      { type: DataTypes.INTEGER,
-        allowNull: false,
-      },
     notes:{
       type: DataTypes.STRING,
       allowNull: false
@@ -16,6 +12,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     });
   };
-
   return petNotes;
 };

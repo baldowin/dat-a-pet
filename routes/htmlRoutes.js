@@ -9,14 +9,6 @@ module.exports = function (app) {
 
   app.get("/dashboard",isAuthenticated, isOwner, function (req, res) {
     res.sendFile(path.join(__dirname, "../public/test/dashboard.html"));
-    // db.pets.findAll({
-    //   where: {
-    //     ownerId: 1
-    //     //HARDCODED OWNERID !!!!!!!!!
-    //   }
-    // }).then(function (view) {
-    //   res.json(view);
-    // });
   });
   app.get("/login", function(req, res){
     if (req.user) {
