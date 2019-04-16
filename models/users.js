@@ -32,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
     admin: {
       type: DataTypes.TINYINT,
       allowNull: false,
-      defaultValue: true
+      defaultValue: false
     }
   });
 

@@ -2,27 +2,32 @@ var db = require("../models");
 var path = require("path");
 
 var isAuthenticated = require("../config/middleware/isAuthenticated");
-var isOwner = require("../config/middleware/isOwner")
+var isOwner = require("../config/middleware/isOwner");
 
 module.exports = function (app) {
   // Load index page
-  app.get("/dashboard", function (req, res) {
-    db.pets.findAll({
-      where: {
-        ownerId: 1
-        //HARDCODED OWNERID !!!!!!!!!
-      }
-    }).then(function (view) {
-      res.json(view);
-    });
+
+  app.get("/dashboard",isAuthenticated, isOwner, function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/test/dashboard.html"));
+    // db.pets.findAll({
+    //   where: {
+    //     ownerId: 1
+    //     //HARDCODED OWNERID !!!!!!!!!
+    //   }
+    // }).then(function (view) {
+    //   res.json(view);
+    // });
   });
   app.get("/login", function(req, res){
+    if (req.user) {
+      res.redirect("/dashboard");
+    }
     // res.render("login");
-    res.sendFile(path.join(__dirname, "../public/test/login.html"))
+    res.sendFile(path.join(__dirname, "../public/test/login.html"));
   });
   app.get("/signup", function(req, res){
     // res.render("signup");
-    res.sendFile(path.join(__dirname, "../public/test/signup.html"))
+    res.sendFile(path.join(__dirname, "../public/test/signup.html"));
   });
   app.get("/", function(req, res){
     res.render("index");
