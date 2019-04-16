@@ -66,4 +66,18 @@ module.exports = function (app) {
       // };
     });
   });
+
+  app.delete("/api/pets/:id", function(req, res) {
+    db.pets.destroy({ where: {petId: req.params.id}}).then(function(result) {
+      res.json(result);
+    });
+  });
+  app.put("/api/pets/:id", function(req,res) {
+    console.log("WTF");
+    db.pets.update(req.body,{
+      where: {petId: req.params.id}
+    }).then(function(result){
+      res.json(result);
+    });
+  });
 };
