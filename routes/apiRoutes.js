@@ -1,9 +1,11 @@
 var db = require("../models");
 var passport = require("../config/passport");
+var isAuthenticated = require("../config/middleware/isAuthenticated");
+var isOwner = require("../config/middleware/isOwner");
 
 module.exports = function (app) {
   // Get all examples
-  app.get("/api/pets", function (req, res) {
+  app.get("/api/pets", isAuthenticated, isOwner, function (req, res) {
     db.owners.findAll({
       include: [db.pets],
       where: {ownerEmail: req.user.email}
