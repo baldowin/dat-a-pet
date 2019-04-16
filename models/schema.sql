@@ -1,5 +1,8 @@
-DROP DATABASE IF EXISTS exampledb;
-CREATE DATABASE exampledb;
+DROP DATABASE IF EXISTS datapet_db;
 
-DROP DATABASE IF EXISTS testdb;
-CREATE DATABASE testdb;
+CREATE DATABASE datapet_db;
+
+-- drops and creates database
+-- tables are created through sequalize
+-- seeds.sql file exists but is not necessary to populate database
+-- if you are running the sequalize instance on the server
