@@ -48,12 +48,17 @@ module.exports = function (app) {
       res.json(result);
     });
   });
-
-//   // Delete an example by id
-//   app.delete("/api/pet/:id", function(req, res) {
-//     db.pets.destroy({ where: { id: req.params.id } }).then(function(result) {
-//       res.json(result);
-//     });
-//   });
-// };
+  app.delete("/api/pets/:id", function(req, res) {
+    db.pets.destroy({ where: {petId: req.params.id}}).then(function(result) {
+      res.json(result);
+    });
+  });
+  app.put("/api/pets/:id", function(req,res) {
+    console.log("WTF");
+    db.pets.update(req.body,{
+      where: {petId: req.params.id}
+    }).then(function(result){
+      res.json(result);
+    });
+  });
 };
