@@ -13,6 +13,29 @@ module.exports = function (app) {
       res.json(view);
     });
   });
+  
+  app.get("/api/pets/immunizations/:petType/:id", isAuthenticated, isOwner, function(req, res){
+    switch(req.params.petType){
+    case "dog":
+      db.dogImmunizations.findOne({
+        where: {
+          petPetId: req.params.id
+        }
+      }).then(function(view){
+        res.json(view);
+      });
+      break;
+    case "cat":
+      db.catImmunizations.findOne({
+        where: {
+          petPetId: req.params.id
+        }
+      }).then(function(view){
+        res.json(view);
+      });
+      break;
+    }
+  });
 
 
 
