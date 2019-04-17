@@ -8,7 +8,7 @@ module.exports = function (app) {
   app.get("/api/pets", isAuthenticated, isOwner, function (req, res) {
     db.owners.findAll({
       include: [db.pets],
-      where: {ownerEmail: req.user.email}
+      where: { ownerEmail: req.user.email }
     }).then(function (view) {
       res.json(view);
     });
@@ -17,7 +17,7 @@ module.exports = function (app) {
 
 
   ////START OF AUTH APIS//////////////
-  app.post("/api/login", passport.authenticate("local"), function(req, res) {
+  app.post("/api/login", passport.authenticate("local"), function (req, res) {
     res.json("/dashboard");
   });
 
@@ -48,14 +48,22 @@ module.exports = function (app) {
   });
 
   // Auth // Logout
-  app.get("/logout", function(req, res) {
+  app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
   });
 
-  app.post("/api/pets", function(req, res) {
-    db.pets.create(req.body).then(function(result) {
-      res.json(result);
+  app.post("/api/pets", isAuthenticated, isOwner, function (req, res) {
+    db.owners.findOne({
+      where: {
+        ownerEmail: req.user.email,
+      }
+    }).then(function (view) {
+      req.body.ownerOwnerId = view.dataValues.ownerId;
+
+      db.pets.create(req.body).then(function (result) {
+        res.json(result);
+      });
     });
   });
   app.delete("/api/pets/:id", function(req, res) {
