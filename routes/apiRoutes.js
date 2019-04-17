@@ -64,7 +64,6 @@ module.exports = function (app) {
     });
   });
   app.put("/api/pets/:id", function(req,res) {
-    console.log("WTF");
     db.pets.update(req.body,{
       where: {petId: req.params.id}
     }).then(function(result){
