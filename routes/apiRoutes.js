@@ -77,11 +77,11 @@ module.exports = function (app) {
   app.post("/api/pets", function (req, res) {
     db.owners.findOne({
       where: {
-        ownerEmail: "again@email.com"
+        ownerEmail: "unique@email.com"
         // req.user.email,
       }
     }).then(function (view) {
-      req.body.ownerOwnerId = 1;
+      req.body.ownerOwnerId = view.dataValues.ownerId;
       //view.dataValues.ownerId
       db.pets.create(req.body).then(function (result) {
         result.dataValues.immunizations = "";
