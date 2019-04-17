@@ -28,16 +28,12 @@ module.exports = function (app) {
       password: req.body.password,
       owner: true
     }).then(function () {
-<<<<<<< HEAD
-=======
-      console.log("create ran");
       db.owners.create({
         ownerEmail: req.body.email,
         ownerName: req.body.name,
         phone: req.body.phone,
         //authorizedAgents: req.body.agents Future functionality
       }).then(function(){ 
->>>>>>> b0d85d45bda9602e7519e1c26504dec8295b7250
       // res.json("success");
         res.redirect(307, "/api/login");
       }).catch(function (err) {
