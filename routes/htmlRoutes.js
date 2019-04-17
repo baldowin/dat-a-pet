@@ -15,11 +15,11 @@ module.exports = function (app) {
       res.redirect("/dashboard");
     }
     // res.render("login");
-    res.sendFile(path.join(__dirname, "../public/test/login.html"));
+    res.render("../views/login.handlebars");
   });
   app.get("/signup", function(req, res){
     // res.render("signup");
-    res.sendFile(path.join(__dirname, "../public/test/signup.html"));
+    res.render("../views/signup.handlebars");
   });
   app.get("/", function(req, res){
     res.render("index");
@@ -36,5 +36,9 @@ module.exports = function (app) {
   // Render 404 page for any unmatched routes
   app.get("*", function (req, res) {
     res.render("404");
+  });
+  
+  app.get("/dashboard",function(req, res){
+    res.render("dashboard")
   });
 };
