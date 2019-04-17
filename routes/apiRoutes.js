@@ -29,8 +29,18 @@ module.exports = function (app) {
       owner: true
     }).then(function () {
       console.log("create ran");
+      db.owners.create({
+        ownerEmail: req.body.email,
+        ownerName: req.body.name,
+        phone: req.body.phone,
+        //authorizedAgents: req.body.agents Future functionality
+      }).then(function(){ 
       // res.json("success");
-      res.redirect(307, "/api/login");
+        res.redirect(307, "/api/login");
+      }).catch(function (err) {
+        console.log(err);
+        res.json(err);
+      });
     }).catch(function (err) {
       console.log(err);
       res.json(err);
@@ -54,16 +64,6 @@ module.exports = function (app) {
       db.pets.create(req.body).then(function (result) {
         res.json(result);
       });
-
-
-
-      //   // Delete an example by id
-      //   app.delete("/api/pet/:id", function(req, res) {
-      //     db.pets.destroy({ where: { id: req.params.id } }).then(function(result) {
-      //       res.json(result);
-      //     });
-      //   });
-      // };
     });
   });
   app.delete("/api/pets/:id", function(req, res) {
@@ -72,7 +72,6 @@ module.exports = function (app) {
     });
   });
   app.put("/api/pets/:id", function(req,res) {
-    console.log("WTF");
     db.pets.update(req.body,{
       where: {petId: req.params.id}
     }).then(function(result){
