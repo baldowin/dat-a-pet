@@ -43,28 +43,65 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
-  app.post("/api/pets", isAuthenticated, isOwner, function (req, res) {
-    db.owners.findOne({
-      where: {
-        ownerEmail: req.user.email,
-      }
-    }).then(function (view) {
-      req.body.ownerOwnerId = view.dataValues.ownerId;
-
-      db.pets.create(req.body).then(function (result) {
-        res.json(result);
+  function immunizations(req, callback){
+    switch (req.body.petType){
+    case "dog":
+      db.dogImmunizations.findOne({
+        where: 
+        {
+          id: 1
+        }
+      }).then(function(view){
+        console.log(view);
+        req.body.immunizations = view;
+        //REMEMBER TO UPDATE THIS ONE AS WELL OR THIS WILL MESS UP
+        //stringify and stuff
       });
+      break;
+    case "cat":
+      db.catImmunizations.findOne({
+        where: 
+      {
+        id: 1
+      }
+      }).then(function(view){
+        var string = JSON.stringify(Object.keys(view.dataValues));
+        string = string.replace(/\/|\[|"/g, "");
+        console.log(string);
+        req.body.immunizations = string;
+      });
+      break;
+    }
+    return callback(req);
+  }
 
+  app.post("/api/pets", function (req, res) {
+    immunizations(req, function(req){
+      db.owners.findOne({
+        where: {
+          ownerEmail: "new@email.com"
+          // req.user.email,
+        }
+      }).then(function (view) {
+        // console.log(view);
+        req.body.ownerOwnerId = view.dataValues.ownerId;
 
-
-      //   // Delete an example by id
-      //   app.delete("/api/pet/:id", function(req, res) {
-      //     db.pets.destroy({ where: { id: req.params.id } }).then(function(result) {
-      //       res.json(result);
-      //     });
-      //   });
-      // };
+        db.pets.create(req.body).then(function (result) {
+          res.json(result);
+        });
+      });
     });
+   
+
+
+    //   // Delete an example by id
+    //   app.delete("/api/pet/:id", function(req, res) {
+    //     db.pets.destroy({ where: { id: req.params.id } }).then(function(result) {
+    //       res.json(result);
+    //     });
+    //   });
+    // };
+    
   });
   app.delete("/api/pets/:id", function(req, res) {
     db.pets.destroy({ where: {petId: req.params.id}}).then(function(result) {

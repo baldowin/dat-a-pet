@@ -29,37 +29,6 @@ app.set("view engine", "handlebars");
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
-//   // Create a new pet
-// var testHarnessPet1 = {
-//   petName: "Evil",
-//   imageURL: " ",
-//   birthMonth: 06,
-//   birthYear: 66,
-//   petType: "Dog",
-//   petSubtype: "Weiner",
-//   gender: "A-gendered Demon",
-//   neutered: true,
-//   ownerId: 1,
-//   medicalHistory:  "chronic possessions"
-// };
-// db.pets.create(testHarnessPet1, function(result){
-//   console.log("successfully created: " +result);
-// });
-// var testHarnessPet2 = {
-//   petName: "Floyd",
-//   imageURL: " ", 
-//   birthMonth: 01,
-//   birthYear: 18,
-//   petType: "Cat", 
-//   petSubtype: "Cheshire", 
-//   gender: "Male",
-//   neutered: false,
-//   ownerId: 2,
-//   medicalHistory: "suffers long boughts of disappearing"
-// };
-// db.pets.create(testHarnessPet2, function(result){
-//   console.log("successfully created: " +result);
-// });
 
 var syncOptions = { force: false };
 
@@ -70,14 +39,73 @@ if (process.env.NODE_ENV === "test") {
 }
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
+db.sequelize.sync(syncOptions).then(function () {
+  app.listen(PORT, function () {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,
       PORT
     );
   });
+  //seed database with a new user
+  db.users.create({
+    email: "unique@email.com",
+    password: "TEST",
+    owner: true
+  }).then(function () {
+    db.owners.bulkCreate([{
+      ownerName: "Tucker",
+      ownerEmail: "unique@email.com",
+      phone: 5558675309,
+      authorizedAgents: "Dale",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }]).then(function (view) {
+      console.log("bulkCreate response");
+      console.log(view[0].dataValues.ownerId);
+      db.pets.bulkCreate([
+        {
+          petName: "Evil",
+          imageURL: " ",
+          birthMonth: 06,
+          birthYear: 66,
+          petType: "Dog",
+          petSubtype: "Weiner",
+          gender: "A-gendered Demon",
+          neutered: true,
+          ownerOwnerId: view[0].dataValues.ownerId,
+          medicalHistory: "chronic possessions",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }, {
+          petName: "Floyd",
+          imageURL: " ",
+          birthMonth: 01,
+          birthYear: 18,
+          petType: "Cat",
+          petSubtype: "Cheshire",
+          gender: "Male",
+          neutered: false,
+          ownerOwnerId: view[0].dataValues.ownerId,
+          medicalHistory: "suffers long boughts of disappearing",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }]).then(function (view) {
+        db.dogImmunizations.create({
+          id: view[0].dataValues.petId
+        }).then(function(view){
+          console.log("dog immun");
+          console.log(view);
+        });
+        db.catImmunizations.create({
+          id: view[1].dataValues.petId
+        }).then(function(view){
+          console.log(view);
+        });
+      });
+    });
+  });
 });
+
 
 module.exports = app;

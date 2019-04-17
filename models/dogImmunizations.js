@@ -2,41 +2,41 @@ module.exports = function (sequelize, DataTypes) {
 
   var dogImmunizations = sequelize.define("dogImmunizations", {
 
-    DHPP_6_8_weeks:
+    DHPP_2_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 2
+          defaultValue: false
         },
-    DHPP_9_11_weeks:
+    DHPP_3_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 3
+          defaultValue: false
         },
-    DHPP_12_15_weeks:
+    DHPP_4_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 4
+          defaultValue: false
         },
-    Rabies_12_15_weeks:
+    Rabies_4_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 4
+          defaultValue: false
         },
-    Bordetella_12_15_weeks:
+    Bordetella_4_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 4
+          defaultValue: false
         },
-    DHPP__16_weeks:
+    DHPP_5_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 5
+          defaultValue: false
         },
     DHPP_Booster:
         {
