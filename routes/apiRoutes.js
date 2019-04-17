@@ -22,16 +22,26 @@ module.exports = function (app) {
   });
 
   // Auth // Signup - new user creation - 
-  app.post("/api/signup", function(req, res){
+  app.post("/api/signup", function (req, res) {
     db.users.create({
       email: req.body.email,
       password: req.body.password,
       owner: true
-    }).then(function() {
+    }).then(function () {
       console.log("create ran");
+      db.owners.create({
+        ownerEmail: req.body.email,
+        ownerName: req.body.name,
+        phone: req.body.phone,
+        //authorizedAgents: req.body.agents Future functionality
+      }).then(function(){ 
       // res.json("success");
-      res.redirect(307, "/api/login");
-    }).catch(function(err) {
+        res.redirect(307, "/api/login");
+      }).catch(function (err) {
+        console.log(err);
+        res.json(err);
+      });
+    }).catch(function (err) {
       console.log(err);
       res.json(err);
     });
