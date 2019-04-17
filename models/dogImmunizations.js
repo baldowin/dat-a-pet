@@ -57,6 +57,13 @@ module.exports = function (sequelize, DataTypes) {
           defaultValue: "00;00"
         },
   });
+  dogImmunizations.associate = function(models) {
+    dogImmunizations.belongsTo(models.pets, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
   return dogImmunizations;
 
 };

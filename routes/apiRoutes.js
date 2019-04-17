@@ -76,19 +76,39 @@ module.exports = function (app) {
   }
 
   app.post("/api/pets", function (req, res) {
-    immunizations(req, function(req){
-      db.owners.findOne({
-        where: {
-          ownerEmail: "new@email.com"
-          // req.user.email,
-        }
-      }).then(function (view) {
-        // console.log(view);
-        req.body.ownerOwnerId = view.dataValues.ownerId;
+    db.owners.findOne({
+      where: {
+        ownerEmail: "again@email.com"
+        // req.user.email,
+      }
+    }).then(function (view) {
+      // console.log(view);
+      req.body.ownerOwnerId = 1;
 
-        db.pets.create(req.body).then(function (result) {
-          res.json(result);
-        });
+      db.pets.create(req.body).then(function (result) {
+        console.log(result.dataValues.petId);
+        // db.catImmunizations.create({
+        //   petPetId: result.dataValues.petId
+        // }).then(function(result){
+        //   return result;
+        // });
+        switch(result.dataValues.petType){
+        case "dog":
+          db.dogImmunizations.create({
+            petPetId: result.dataValues.petId
+          });
+          break;
+        case "cat":
+          db.catImmunizations.create({
+            petPetId: result.dataValues.petId
+          }).then(function(result){
+            console.log(result);
+            console.log("catimmun");
+          });
+          break;
+        }
+        // result.dataValues.immunization = JSON.stringify(newResult());
+        res.json(result);
       });
     });
    

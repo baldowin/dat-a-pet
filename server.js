@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 require("dotenv").config();
 var express = require("express");
 var session = require("express-session");
@@ -36,6 +37,8 @@ var syncOptions = { force: false };
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
+}else{
+  syncOptions.force = true;
 }
 
 // Starting the server, syncing our models ------------------------------------/
@@ -61,8 +64,6 @@ db.sequelize.sync(syncOptions).then(function () {
       createdAt: new Date(),
       updatedAt: new Date()
     }]).then(function (view) {
-      console.log("bulkCreate response");
-      console.log(view[0].dataValues.ownerId);
       db.pets.bulkCreate([
         {
           petName: "Evil",
@@ -92,15 +93,11 @@ db.sequelize.sync(syncOptions).then(function () {
           updatedAt: new Date()
         }]).then(function (view) {
         db.dogImmunizations.create({
-          id: view[0].dataValues.petId
-        }).then(function(view){
-          console.log("dog immun");
-          console.log(view);
+          petPetId: view[0].dataValues.petId
         });
         db.catImmunizations.create({
-          id: view[1].dataValues.petId
-        }).then(function(view){
-          console.log(view);
+          petPetId: view[1].dataValues.petId,
+          FVRCP_2_months: true
         });
       });
     });
