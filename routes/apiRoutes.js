@@ -28,11 +28,9 @@ module.exports = function (app) {
       password: req.body.password,
       owner: true
     }).then(function () {
-      console.log("create ran");
       // res.json("success");
       res.redirect(307, "/api/login");
     }).catch(function (err) {
-      console.log(err);
       res.json(err);
     });
   });
@@ -43,38 +41,6 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
-  function immunizations(req, callback){
-    switch (req.body.petType){
-    case "dog":
-      db.dogImmunizations.findOne({
-        where: 
-        {
-          id: 1
-        }
-      }).then(function(view){
-        console.log(view);
-        req.body.immunizations = view;
-        //REMEMBER TO UPDATE THIS ONE AS WELL OR THIS WILL MESS UP
-        //stringify and stuff
-      });
-      break;
-    case "cat":
-      db.catImmunizations.findOne({
-        where: 
-      {
-        id: 1
-      }
-      }).then(function(view){
-        var string = JSON.stringify(Object.keys(view.dataValues));
-        string = string.replace(/\/|\[|"/g, "");
-        console.log(string);
-        req.body.immunizations = string;
-      });
-      break;
-    }
-    return callback(req);
-  }
-
   app.post("/api/pets", function (req, res) {
     db.owners.findOne({
       where: {
@@ -82,33 +48,34 @@ module.exports = function (app) {
         // req.user.email,
       }
     }).then(function (view) {
-      // console.log(view);
       req.body.ownerOwnerId = 1;
-
+      //view.dataValues.ownerId
       db.pets.create(req.body).then(function (result) {
-        console.log(result.dataValues.petId);
-        // db.catImmunizations.create({
-        //   petPetId: result.dataValues.petId
-        // }).then(function(result){
-        //   return result;
-        // });
-        switch(result.dataValues.petType){
-        case "dog":
-          db.dogImmunizations.create({
-            petPetId: result.dataValues.petId
-          });
-          break;
-        case "cat":
-          db.catImmunizations.create({
-            petPetId: result.dataValues.petId
-          }).then(function(result){
-            console.log(result);
-            console.log("catimmun");
-          });
-          break;
+        result.dataValues.immunizations = "";
+        function immunizations(result, callback){
+          switch(result.dataValues.petType){
+          case "dog":
+            db.dogImmunizations.create({
+              petPetId: result.dataValues.petId
+            }).then(function(res){
+              result.dataValues.immunizations += JSON.stringify(res.dataValues);
+              callback(result);
+            });
+            break;
+          case "cat":
+            db.catImmunizations.create({
+              petPetId: result.dataValues.petId
+            }).then(function(res){
+              result.dataValues.immunizations += JSON.stringify(res.dataValues);
+              callback(result);
+            });
+            break;
+          }
         }
-        // result.dataValues.immunization = JSON.stringify(newResult());
-        res.json(result);
+        function endThen(result) {
+          res.json(result);
+        }
+        immunizations(result, endThen);
       });
     });
    
@@ -129,7 +96,6 @@ module.exports = function (app) {
     });
   });
   app.put("/api/pets/:id", function(req,res) {
-    console.log("WTF");
     db.pets.update(req.body,{
       where: {petId: req.params.id}
     }).then(function(result){
