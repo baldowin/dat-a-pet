@@ -6,7 +6,9 @@ var isOwner = require("../config/middleware/isOwner");
 
 module.exports = function (app) {
   // Load index page
-
+  app.get("/newPet", isAuthenticated, isOwner, function(req, res){
+    res.render("../views/newPet.handlebars")
+  });
   app.get("/dashboard",isAuthenticated, isOwner, function (req, res) {
     res.sendFile(path.join(__dirname, "../public/test/dashboard.html"));
   });

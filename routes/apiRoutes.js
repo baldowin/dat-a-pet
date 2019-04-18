@@ -77,7 +77,7 @@ module.exports = function (app) {
   app.post("/api/pets", function (req, res) {
     db.owners.findOne({
       where: {
-        ownerEmail: "unique@email.com" //currently Hardcoded, Change back when fully functional
+        ownerEmail: "unique@email.com"
         // req.user.email,
       }
     }).then(function (view) {
@@ -106,22 +106,24 @@ module.exports = function (app) {
           }
         }
         function endThen(result) {
-          res.json(result);
+          res.json("/dashboard");
         }
         immunizations(result, endThen);
       });
-    });
-  });
-  app.delete("/api/pets/:id", function(req, res) {
-    db.pets.destroy({ where: {petId: req.params.id}}).then(function(result) {
-      res.json(result);
-    });
-  });
-  app.put("/api/pets/:id", function(req,res) {
-    db.pets.update(req.body,{
-      where: {petId: req.params.id}
-    }).then(function(result){
-      res.json(result);
+
+
+      app.delete("/api/pets/:id", function(req, res) {
+        db.pets.destroy({ where: {petId: req.params.id}}).then(function(result) {
+          res.json(result);
+        });
+      });
+      app.put("/api/pets/:id", function(req,res) {
+        db.pets.update(req.body,{
+          where: {petId: req.params.id}
+        }).then(function(result){
+          res.json(result);
+        });
+      });
     });
   });
 };
