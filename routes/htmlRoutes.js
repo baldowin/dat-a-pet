@@ -15,9 +15,10 @@ module.exports = function (app) {
   app.get("/login", function(req, res){
     if (req.user) {
       res.redirect("/dashboard");
-    }
+    }else{
     // res.render("login");
-    res.render("../views/login.handlebars");
+      res.render("../views/login.handlebars");
+    }
   });
   app.get("/signup", function(req, res){
     // res.render("signup");
