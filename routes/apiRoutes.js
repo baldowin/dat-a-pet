@@ -105,7 +105,7 @@ module.exports = function (app) {
             break;
           }
         }
-        function endThen(result) {
+        function endThen() {
           res.json("/dashboard");
         }
         immunizations(result, endThen);
