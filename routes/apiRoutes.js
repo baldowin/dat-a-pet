@@ -13,6 +13,29 @@ module.exports = function (app) {
       res.json(view);
     });
   });
+  
+  app.get("/api/pets/immunizations/:petType/:id", isAuthenticated, isOwner, function(req, res){
+    switch(req.params.petType){
+    case "dog":
+      db.dogImmunizations.findOne({
+        where: {
+          petPetId: req.params.id
+        }
+      }).then(function(view){
+        res.json(view);
+      });
+      break;
+    case "cat":
+      db.catImmunizations.findOne({
+        where: {
+          petPetId: req.params.id
+        }
+      }).then(function(view){
+        res.json(view);
+      });
+      break;
+    }
+  });
 
 
 
@@ -28,7 +51,6 @@ module.exports = function (app) {
       password: req.body.password,
       owner: true
     }).then(function () {
-      console.log("create ran");
       db.owners.create({
         ownerEmail: req.body.email,
         ownerName: req.body.name,
@@ -42,7 +64,6 @@ module.exports = function (app) {
         res.json(err);
       });
     }).catch(function (err) {
-      console.log(err);
       res.json(err);
     });
   });
@@ -53,16 +74,41 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
-  app.post("/api/pets", isAuthenticated, isOwner, function (req, res) {
+  app.post("/api/pets", function (req, res) {
     db.owners.findOne({
       where: {
-        ownerEmail: req.user.email,
+        ownerEmail: "unique@email.com" //currently Hardcoded, Change back when fully functional
+        // req.user.email,
       }
     }).then(function (view) {
       req.body.ownerOwnerId = view.dataValues.ownerId;
-
+      //view.dataValues.ownerId
       db.pets.create(req.body).then(function (result) {
-        res.json(result);
+        result.dataValues.immunizations = "";
+        function immunizations(result, callback){
+          switch(result.dataValues.petType){
+          case "dog":
+            db.dogImmunizations.create({
+              petPetId: result.dataValues.petId
+            }).then(function(res){
+              result.dataValues.immunizations += JSON.stringify(res.dataValues);
+              callback(result);
+            });
+            break;
+          case "cat":
+            db.catImmunizations.create({
+              petPetId: result.dataValues.petId
+            }).then(function(res){
+              result.dataValues.immunizations += JSON.stringify(res.dataValues);
+              callback(result);
+            });
+            break;
+          }
+        }
+        function endThen(result) {
+          res.json(result);
+        }
+        immunizations(result, endThen);
       });
     });
   });
