@@ -1,8 +1,8 @@
 {
     "development": {
-      "username": "root",
-      "password": "******",
-      "database": "exampledb",
+      "username": "remoteConnect",
+      "password": "TEST",
+      "database": "datapet_db",
       "host": "localhost",
       "dialect": "mysql"
     },
