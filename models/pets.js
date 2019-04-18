@@ -58,6 +58,12 @@ module.exports = function (sequelize, DataTypes) {
     pets.hasMany(models.petNotes, {
       onDelete: "cascade"
     });
+    pets.hasOne(models.dogImmunizations, {
+      onDelete: "cascade"
+    });
+    pets.hasOne(models.catImmunizations, {
+      onDelete: "cascade"
+    });
   };
   return pets;
 

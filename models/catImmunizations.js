@@ -2,41 +2,41 @@ module.exports = function (sequelize, DataTypes) {
 
   var catImmunizations = sequelize.define("catImmunizations", {
 
-    FVRCP_6_8_Weeks:
+    FVRCP_2_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 2
+          defaultValue: false
         },
-    FVRCP_9_11_Weeks:
+    FVRCP_3_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 3
+          defaultValue: false
         },
-    FELV_9_11_Weeks:
+    FELV_3_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 3
+          defaultValue: false
         },
-    FVRCP__16_Weeks:
+    FVRCP_4_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 5
+          defaultValue: false
         },
-    FELV__16_Weeks:
+    FELV_4_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 4
+          defaultValue: false
         },
-    RABIES__16_Weeks:
+    RABIES_4_months:
         {
           type: DataTypes.INTEGER,
           allowNull: false,
-          defaultValue: 4
+          defaultValue: false
         },
     FVRCP_Booster:
         {
@@ -51,6 +51,13 @@ module.exports = function (sequelize, DataTypes) {
           defaultValue: "00;00"
         }
   });
+  catImmunizations.associate = function(models) {
+    catImmunizations.belongsTo(models.pets, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
   return catImmunizations;
 
 };
