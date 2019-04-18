@@ -77,7 +77,7 @@ module.exports = function (app) {
   app.post("/api/pets", function (req, res) {
     db.owners.findOne({
       where: {
-        ownerEmail: "unique@email.com"
+        ownerEmail: "unique@email.com" //currently Hardcoded, Change back when fully functional
         // req.user.email,
       }
     }).then(function (view) {
