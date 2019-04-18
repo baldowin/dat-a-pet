@@ -54,7 +54,9 @@ db.sequelize.sync(syncOptions).then(function () {
   db.users.create({
     email: "unique@email.com",
     password: "TEST",
-    owner: true
+    owner: true,
+    CSR: true,
+    admin: true
   }).then(function () {
     db.owners.bulkCreate([{
       ownerName: "Tucker",
