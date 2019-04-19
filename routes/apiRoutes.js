@@ -7,7 +7,7 @@ var isAdmin = require("../config/middleware/isOwner");
 module.exports = function (app) {
   // Get all examples
   app.get("/api/pets", isAuthenticated, isOwner, function (req, res) {
-    db.owners.findAll({
+    db.owners.findOne({
       include: [db.pets],
       where: { ownerEmail: req.user.email }
     }).then(function (view) {
@@ -15,7 +15,7 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/api/pets", isAuthenticated, isAdmin, function (req, res) {
+  app.get("/api/admin/pets", isAuthenticated, isAdmin, function (req, res) {
     db.owners.findAll({
       include:[db.pets]
     }).then(function (view) {
