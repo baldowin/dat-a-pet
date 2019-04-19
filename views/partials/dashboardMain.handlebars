@@ -1,0 +1,13 @@
+<h1>TEST</h1>
+<p>{{context}}</p>
+{{#each pets}}
+<div class="row">
+	<div class="col-md-7">
+		<p>test each pets</p>
+		{{>petInfo this.petInfo}}
+	</div>
+	<div class="col-md-5">
+		{{>immunization this.immunization}}
+	</div>
+</div>
+{{/each}}

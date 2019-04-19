@@ -1,5 +1,5 @@
 // var db = require("../models");
-var path = require("path");
+// var path = require("path");
 
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 var isOwner = require("../config/middleware/isOwner");
@@ -10,7 +10,24 @@ module.exports = function (app) {
     res.render("../views/newPet.handlebars");
   });
   app.get("/dashboard",isAuthenticated, isOwner, function (req, res) {
-    res.sendFile(path.join(__dirname, "../public/test/dashboard.html"));
+    var context = {
+      pets: [
+        {
+          petInfo: "petInfo",
+          immunization: "immunizationInfo"
+        },
+        {
+          petInfo: "petInfo",
+          immunization: "immunizationInfo"
+        },
+        {
+          petInfo: "petInfo",
+          immunization: "immunizationInfo"
+        }
+      ],
+      owner: "Tucker"
+    };
+    res.render("../views/dashboardTemplate.handlebars", context);
   });
   app.get("/login", function(req, res){
     if (req.user) {
