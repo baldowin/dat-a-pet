@@ -2,6 +2,7 @@ var db = require("../models");
 var passport = require("../config/passport");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 var isOwner = require("../config/middleware/isOwner");
+var isAdmin = require("../config/middleware/isOwner");
 
 module.exports = function (app) {
   // Get all examples
@@ -13,7 +14,14 @@ module.exports = function (app) {
       res.json(view);
     });
   });
-  //ADD ADMIN CALLS HERE FOR A SEARCH FORM/////////////////////////////
+
+  app.get("/api/pets", isAuthenticated, isAdmin, function (req, res) {
+    db.owners.findAll({
+      include:[db.pets]
+    }).then(function (view) {
+      res.json(view);
+    });
+  });
   
   app.get("/api/pets/immunizations/:petType/:id", isAuthenticated, isOwner, function(req, res){
     switch(req.params.petType){
