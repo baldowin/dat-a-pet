@@ -1,5 +1,5 @@
 // var db = require("../models");
-var path = require("path");
+// var path = require("path");
 
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 var isOwner = require("../config/middleware/isOwner");
