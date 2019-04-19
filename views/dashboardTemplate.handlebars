@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="margin: 3.5vh 2vw; margin-left:7vw">My Dashboard</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" style="height: 100vh; background-color:lightslategray; color:whitesmoke; font-size:1.2em">
+            <div class="row">
+                {{#if this.owner}}
+                {{!-- this is the if owner section --}}
+                <ul class="dashboardNavList" style="list-style:none">
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/newPet">Add a Pet</a></li>
+                    <li><a href="/services">Schedule Appt.</a></li>
+                </ul>
+                {{/if}}
+            </div>
+            <div class="row">
+                {{!-- this is the other link data and can be hard coded --}}
+                <ul class="dashboardNavList" style="list-style:none">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/services">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8">
+            {{>dashboardMain this}}
+        </div>
+    </div>
+</div>
