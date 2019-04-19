@@ -32,10 +32,14 @@ $(document).ready(function() {
     }).then(function(data) {
       window.location.replace(data);
       // If there's an error, log the error
-    }).catch(function(err) {
-      console.log(err);
+    }).catch(function(err){
+      handleLoginErr(err);
     });
   }
   
+  function handleLoginErr(err) {
+    $("#alert .msg").text(err.responseJSON);
+    $("#alert").fadeIn(500);
+  }
 });
   

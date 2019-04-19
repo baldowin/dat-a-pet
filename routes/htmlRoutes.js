@@ -7,7 +7,9 @@ var isOwner = require("../config/middleware/isOwner");
 module.exports = function (app) {
   // Load index page
   app.get("/newPet", isAuthenticated, isOwner, function(req, res){
-    res.render("../views/newPet.handlebars");
+    var context = {};
+    context.owner = req.user;
+    res.render("../views/dashboardNewPet.handlebars", context);
   });
   app.get("/dashboard",isAuthenticated, isOwner, function (req, res) {
     var context = {
