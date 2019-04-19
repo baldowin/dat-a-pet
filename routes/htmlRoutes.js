@@ -10,7 +10,24 @@ module.exports = function (app) {
     res.render("../views/newPet.handlebars");
   });
   app.get("/dashboard",isAuthenticated, isOwner, function (req, res) {
-    res.sendFile(path.join(__dirname, "../public/test/dashboard.html"));
+    var context = {
+      pets: [
+        {
+          petInfo: "petInfo",
+          immunization: "immunizationInfo"
+        },
+        {
+          petInfo: "petInfo",
+          immunization: "immunizationInfo"
+        },
+        {
+          petInfo: "petInfo",
+          immunization: "immunizationInfo"
+        }
+      ],
+      owner: "Tucker"
+    };
+    res.render("../views/dashboardTemplate.handlebars", context);
   });
   app.get("/login", function(req, res){
     if (req.user) {
