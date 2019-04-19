@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h2>Add a new pet</h2>
+      <form class="newPet">
+        <div class="form-group">
+          <label for="petName-input">Pet Name</label>
+          <input type="text" class="form-control" id="petName-input" placeholder="Name">
+        </div>
+        <div class="form-group">
+          <label for="imageURL-input">ImageURL</label>
+          <input type="text" class="form-control" id="imageURL-input" placeholder="www.example.com">
+        </div>
+        <div class="form-group">
+          <label for="birthMonth-input">Birth Month</label>
+          <input type="number" class="form-control" id="birthMonth-input" placeholder="00">
+        </div>
+        <div class="form-group">
+          <label for="birthYear-input">Birth Year</label>
+          <input type="number" class="form-control" id="birthYear-input" placeholder="00">
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="petType-input">Pet Type</label>
+      <input type="text" class="form-control" id="petType-input" placeholder="cat or dog">
+    </div>
+    <div class="form-group">
+      <label for="gender-input">Gender</label>
+      <input type="text" class="form-control" id="gender-input" placeholder="equality">
+    </div>
+    <div class="form-group">
+      <label for="neutered-input">Neutered</label>
+      <input type="boolean" class="form-control" id="neutered-input" placeholder="1">
+    </div>
+    <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span> <span class="msg"></span>
+    </div>
+    <button type="submit" class="btn btn-default">Add my pet!</button>
+    </form>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../test/newPet.js"></script>
