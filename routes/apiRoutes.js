@@ -13,6 +13,7 @@ module.exports = function (app) {
       res.json(view);
     });
   });
+  //ADD ADMIN CALLS HERE FOR A SEARCH FORM/////////////////////////////
   
   app.get("/api/pets/immunizations/:petType/:id", isAuthenticated, isOwner, function(req, res){
     switch(req.params.petType){
