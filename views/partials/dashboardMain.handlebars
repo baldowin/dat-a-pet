@@ -7,20 +7,19 @@
             src="{{ImageURL}}"
             class="card-img-top" alt="...">
           <div class="card-body">
-            <li>
-			<p>{{birthMonth}}/{{birthYear}}</p>
-			<p>{{petType}}</p>
-			<p>{{gender}}</p>
-			<p>{{neutered}}</p>
+            <p>{{petId}}) {{petName}}</p>
+            <p>{{birthMonth}}/{{birthYear}}</p>
+            <p>{{petType}}</p>
+            <p>{{gender}}</p>
+            <p>{{neutered}}</p>
             <a href="#" id={{petId}} class="btn btn-primary delete">Delete</a>
-			</li>
           </div>
         </div>
 {{/each}}
 <script>
 	$(".delete").on("click",function(){
 		$.delete("/api/pets/"+$(this).data("id")).then(function(){
-     		location.reload();
-		});
-	});
+      location.reload();
+    });
+	});//this doesnt work
 </script>
