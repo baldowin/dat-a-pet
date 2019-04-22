@@ -1,13 +1,16 @@
-<h1>TEST</h1>
-<p>{{context}}</p>
+<p>TEST</p>
+<ul>
 {{#each pets}}
 <div class="row">
 	<div class="col-md-7">
-		<p>test each pets</p>
-		{{>petInfo this.petInfo}}
-	</div>
-	<div class="col-md-5">
-		{{>immunization this.immunization}}
+		<li id={{petId}}>
+		<p>{{petName}}</p>
+		<p>{{birthMonth}}/{{birthYear}}</p>
+		<p>{{petType}}</p>
+		<p>{{gender}}</p>
+		<p>{{neutered}}</p>
+		</li>
 	</div>
 </div>
 {{/each}}
+</ul>
