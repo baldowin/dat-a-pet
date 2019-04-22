@@ -12,14 +12,15 @@
 			<p>{{petType}}</p>
 			<p>{{gender}}</p>
 			<p>{{neutered}}</p>
-            <a href="#" val={{petId}} class="btn btn-primary delete">Delete</a>
+            <a href="#" id={{petId}} class="btn btn-primary delete">Delete</a>
 			</li>
           </div>
         </div>
 {{/each}}
 <script>
 	$(".delete").on("click",function(){
-		$.delete("/api/pets/"+$(this).attr("val")).then(function(){
-     location.reload();;
-	})
+		$.delete("/api/pets/"+$(this).data("id")).then(function(){
+     		location.reload();
+		});
+	});
 </script>
