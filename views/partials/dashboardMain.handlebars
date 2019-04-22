@@ -2,13 +2,12 @@
 {{#each pets}}
   <div class="row" style="margin; auto">
         <div class="card" style="width: 18rem;">
-          <h5 class="card-title">Pet Name</h5>
+          <h5 class="card-title">{{petName}}</h5>
           <img
-            src="pet image"
+            src="{{ImageURL}}"
             class="card-img-top" alt="...">
           <div class="card-body">
             <li>
-			<p>{{petName}}</p>
 			<p>{{birthMonth}}/{{birthYear}}</p>
 			<p>{{petType}}</p>
 			<p>{{gender}}</p>
@@ -20,6 +19,7 @@
 {{/each}}
 <script>
 	$(".delete").on("click",function(){
-		$.delete("/api/pets/"+$(this).attr("val"));
+		$.delete("/api/pets/"+$(this).attr("val")).then(function(){
+     location.reload();;
 	})
 </script>
