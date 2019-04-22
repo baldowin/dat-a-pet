@@ -5,34 +5,30 @@ var isAuthenticated = require("../config/middleware/isAuthenticated");
 var isOwner = require("../config/middleware/isOwner");
 
 ///Helper Functions//
-function nextFunction(context) {
-  return ["../views/dashboardTemplate.handlebars", context];
-}
 
-
-
-function immunizationCall(petObject, context, callback) {
-  if (pets.dataValues.petType === "cat") {
-    db.catImmunizations.findOne(
-      {
-        where:
-        {
-          petPetId: pets.dataValues.petId
-        }
-      }).then(function (view) {
-        petObject.immunization = view;
-      });
-  } else {
-    db.dogImmunizations.findOne({
-      where: { petPetId: pets.dataValues.petId }
-    }).then(function (view) {
-      petObject.immunization = view;
-    });
-  }
-  petObject.petInfo = pets.dataValues;
-  context.pets.push(petObject);
-  return callback(context);
-};
+// function immunizationCall(pet, context) {
+//   if (pet.dataValues.petType === "cat") {
+//     db.catImmunizations.findOne(
+//       {
+//         where:
+//         {
+//           petPetId: pet.dataValues.petId
+//         }
+//       }).then(function (view) {
+//       pet.immunization = view;
+//       context.pets.push(pet);
+//       return context;
+//     });
+//   } else {
+//     db.dogImmunizations.findOne({
+//       where: { petPetId: pet.dataValues.petId }
+//     }).then(function (view) {
+//       pet.immunization = view;
+//       context.pets.push(pet);
+//       return context;
+//     });
+//   }
+// }
 
 
 
@@ -57,16 +53,13 @@ module.exports = function (app) {
       db.pets.findAll({
         where: { ownerOwnerId: view.dataValues.ownerId }
       }).then(function (view) {
-        view.forEach(function (pets) {
-
-          var petObject = {};
-          var array = immunizationCall(petObject, context, nextFunction);
-          console.log(array);
-          res.render(array[0], array[1]);
-        }
+        view.forEach(function(element){
+          context.pets.push(element.dataValues);
+        });
+        console.log(context);
+        res.render("../views/dashboardTemplate.handlebars", context);
       });
     });
-
   });
 
 
@@ -104,4 +97,5 @@ module.exports = function (app) {
   app.get("*", function (req, res) {
     res.render("404");
   });
+
 };
