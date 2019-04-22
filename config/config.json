@@ -1,14 +1,14 @@
 {
     "development": {
       "username": "root",
-      "password": "Skellington1994",
+      "password": "****",
       "database": "datapet_db",
       "host": "localhost",
       "dialect": "mysql"
     },
     "test": {
       "username": "root",
-      "password": "Skellington1994",
+      "password": "*****",
       "database": "testdb",
       "host": "localhost",
       "dialect": "mysql",
